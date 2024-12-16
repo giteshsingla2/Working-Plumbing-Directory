@@ -47,23 +47,23 @@ const Footer = () => {
             <h3 className="text-white text-lg font-semibold mb-4">Popular Services</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/services/emergency" className="text-sm hover:text-white transition-colors">
-                  Emergency Plumbing
+                <Link href="/24-hour-plumber" className="text-sm hover:text-white transition-colors">
+                  24 Hour Plumber
                 </Link>
               </li>
               <li>
-                <Link href="/services/repair" className="text-sm hover:text-white transition-colors">
-                  Pipe Repair
+                <Link href="/clogged-drain-repair" className="text-sm hover:text-white transition-colors">
+                  Clogged Drain Repair
                 </Link>
               </li>
               <li>
-                <Link href="/services/installation" className="text-sm hover:text-white transition-colors">
-                  Water Heater Installation
+                <Link href="/toilet-repair" className="text-sm hover:text-white transition-colors">
+                  Toilet Repair
                 </Link>
               </li>
               <li>
-                <Link href="/services/maintenance" className="text-sm hover:text-white transition-colors">
-                  Drain Cleaning
+                <Link href="/faucet-installation" className="text-sm hover:text-white transition-colors">
+                  Faucet Installation
                 </Link>
               </li>
             </ul>
@@ -75,8 +75,8 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="text-sm">
                 <strong>Phone:</strong>{' '}
-                <a href="tel:1-800-PLUMBER" className="hover:text-white transition-colors">
-                  1-800-PLUMBER
+                <a href="tel:831-232-3402" className="hover:text-white transition-colors">
+                831-232-3402
                 </a>
               </li>
               <li className="text-sm">
@@ -86,7 +86,7 @@ const Footer = () => {
                 </a>
               </li>
               <li className="text-sm">
-                <strong>Hours:</strong> 24/7 Emergency Service
+                <strong>Hours:</strong> 24/7 Emergency Plumbing Service
               </li>
             </ul>
           </div>

@@ -128,18 +128,18 @@ export default async function Home() {
                 link: '/emergency-plumbing',
               },
               {
-                title: 'Drain Cleaning',
-                description: 'Expert drain cleaning services to clear clogs and blockages.',
+                title: 'Clogged Drain Repair',
+                description: 'Expert Clogged drain cleaning services to clear clogs and blockages.',
                 icon: MapPinIcon,
                 availability: 'Mon-Sun, 8am-5pm',
-                link: '/drain-cleaning',
+                link: '/clogged-drain-repair',
               },
               {
-                title: 'Water Heater Installation',
-                description: 'Professional water heater installation services for all types of heaters.',
+                title: 'Sump Pump Repair',
+                description: 'Professional Sump pump repair services for all types of Sump Pumps.',
                 icon: ShieldCheckIcon,
                 availability: 'Mon-Sun, 8am-5pm',
-                link: '/water-heater-installation',
+                link: '/sump-pump-repair',
               },
             ].map((service) => (
               <div

@@ -41,11 +41,11 @@ const Header = () => {
               Contact
             </Link>
             <a
-              href="tel:1-800-PLUMBER"
+              href="tel:831-232-3402"
               className="inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm font-medium"
             >
               <PhoneIcon className="h-4 w-4 mr-2" />
-              Emergency Service
+              Call Now For Plumbing Service
             </a>
           </div>
 
@@ -88,11 +88,11 @@ const Header = () => {
                 Contact
               </Link>
               <a
-                href="tel:1-800-PLUMBER"
+                href="tel:831-232-3402"
                 className="inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm font-medium"
               >
                 <PhoneIcon className="h-4 w-4 mr-2" />
-                Emergency Service
+                Call Now
               </a>
             </div>
           </div>
