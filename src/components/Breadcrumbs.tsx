@@ -2,17 +2,19 @@
 
 import Link from 'next/link';
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
+import { cn } from '@/lib/utils';
 
 interface BreadcrumbsProps {
   items: {
     label: string;
     href?: string;
   }[];
+  className?: string;
 }
 
-export default function Breadcrumbs({ items }: BreadcrumbsProps) {
+export default function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   return (
-    <nav className="flex py-4 px-4 sm:px-6 lg:px-8" aria-label="Breadcrumb">
+    <nav className={cn("flex py-4 px-4 sm:px-6 lg:px-8", className)} aria-label="Breadcrumb">
       <ol className="flex items-center space-x-4">
         <li>
           <div>
