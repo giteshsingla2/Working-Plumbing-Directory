@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# California Plumbing Directory
+
+A Next.js-based directory website for finding plumbing services across California cities.
+
+## Features
+
+- Search for plumbing services by city and service type
+- SEO-optimized pages with meta titles and descriptions
+- Responsive design with mobile-first approach
+- Cached search results using MongoDB
+- Sitemap generation for better SEO
+- Breadcrumb navigation
+- Pagination for search results
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a `.env.local` file with the following variables:
+```
+MONGODB_URI=your_mongodb_uri
+VALUESERP_API_KEY=your_valueserp_api_key
+NEXT_PUBLIC_API_URL=http://localhost:3000
+SITE_URL=your_production_url
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Build for production:
+```bash
+npm run build
+```
 
-## Learn More
+5. Start the production server:
+```bash
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Technology Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- MongoDB
+- ValueSerp API
+- Headless UI
+- Hero Icons
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+- `/src/app` - Next.js app router pages
+- `/src/components` - Reusable React components
+- `/src/lib` - Utility functions and API clients
+- `/src/types` - TypeScript type definitions
+- `/public` - Static assets
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
