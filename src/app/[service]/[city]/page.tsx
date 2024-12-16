@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { searchValueSerp } from "@/lib/valueserp";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Map from "@/components/Map";
 import { StarIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { MapPinIcon, PhoneIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 import { getCaliforniaCities } from "@/lib/cities";
@@ -132,7 +133,7 @@ export default async function Page({ params }: PageProps) {
 
         {/* Service Providers */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedPlaces.slice(0, 10).map((place, index) => {
+          {sortedPlaces.map((place, index) => {
             const getRankBadge = () => {
               if (index === 0) return { color: "bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400", text: "Gold Tier" };
               if (index === 1) return { color: "bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200", text: "Silver Tier" };
@@ -264,6 +265,8 @@ export default async function Page({ params }: PageProps) {
             );
           })}
         </div>
+      {/* Map Component */}
+      <Map city={city} />
       </div>
     </main>
   );
