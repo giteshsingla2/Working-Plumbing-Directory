@@ -21,7 +21,7 @@ export default function SearchForm({ cities, services }: SearchFormProps) {
     if (service && location) {
       const serviceSlug = service.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const locationSlug = location.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      router.push(`/search/${serviceSlug}/${locationSlug}`);
+      router.push(`/${serviceSlug}/${locationSlug}`);
     }
   };
 
