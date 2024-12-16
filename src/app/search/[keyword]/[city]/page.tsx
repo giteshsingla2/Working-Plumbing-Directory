@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import SearchForm from '@/components/SearchForm';
 import { searchValueSerp } from '@/lib/valueserp';
+import { getCaliforniaCities } from '@/lib/cities';
+import { getKeywords } from '@/lib/keywords';
 
 interface Props {
   params: {
@@ -30,6 +32,12 @@ export default async function SearchPage({ params, searchParams }: Props) {
   const decodedKeyword = decodeURIComponent(keyword);
   const decodedCity = decodeURIComponent(city);
 
+  // Fetch cities and services for the search form
+  const [cities, services] = await Promise.all([
+    getCaliforniaCities(),
+    getKeywords()
+  ]);
+
   const results = await searchValueSerp(keyword, city);
   const startIndex = (page - 1) * 10;
   const endIndex = startIndex + 10;
@@ -53,7 +61,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
           </h1>
 
           <div className="mb-8">
-            <SearchForm />
+            <SearchForm cities={cities} services={services} />
           </div>
 
           <div className="bg-white shadow overflow-hidden sm:rounded-md">
