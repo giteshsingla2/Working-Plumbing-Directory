@@ -15,57 +15,45 @@ export const searchValueSerp = cache(async function(keyword: string, city: strin
   };
 
   try {
-    // Check cache first if MongoDB is configured
+    // Check MongoDB first
     if (process.env.MONGODB_URI) {
       try {
         const client = await clientPromise;
         const db = client.db('plumbing-directory');
         const collection = db.collection('search-results');
 
-        // Create indexes if they don't exist
+        // Create compound index for faster lookups
         await collection.createIndex({ keyword: 1, city: 1 });
-        await collection.createIndex({ timestamp: 1 }, { expireAfterSeconds: 7 * 24 * 60 * 60 }); // 7 days TTL
 
+        // Check if we already have results for this keyword + city
         const cachedResult = await collection.findOne({
           keyword: keyword.toLowerCase(),
           city: city.toLowerCase(),
-          timestamp: { $gt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } // 7 days cache
         });
 
         if (cachedResult) {
-          console.log('Cache hit for:', keyword, city);
+          console.log('Found cached results for:', keyword, city);
           return cachedResult.results;
         }
-      } catch (error) {
-        console.error('MongoDB cache error:', error);
-        // Continue with API call if cache fails
-      }
-    }
 
-    // If not in cache or cache failed, fetch from API
-    console.log('Cache miss, fetching from API for:', keyword, city);
-    const response = await axios.get('https://api.valueserp.com/search', { params });
-    const places = response.data.places_results || [];
-    
-    const results: SearchResult[] = places.map((place: any) => ({
-      title: place.title || '',
-      address: place.address || '',
-      phone: place.phone,
-      rating: place.rating,
-      reviews: place.reviews,
-      website: place.website,
-      type: place.type,
-      hours: place.hours,
-      description: place.description
-    }));
+        // If no cached results, fetch from API
+        console.log('No cached results, fetching from API for:', keyword, city);
+        const response = await axios.get('https://api.valueserp.com/search', { params });
+        const places = response.data.places_results || [];
+        
+        const results: SearchResult[] = places.map((place: any) => ({
+          title: place.title || '',
+          address: place.address || '',
+          phone: place.phone,
+          rating: place.rating || 0,
+          reviews: place.reviews || 0,
+          website: place.website,
+          type: place.type,
+          hours: place.hours,
+          description: place.description
+        }));
 
-    // Cache the results if MongoDB is configured
-    if (process.env.MONGODB_URI) {
-      try {
-        const client = await clientPromise;
-        const db = client.db('plumbing-directory');
-        const collection = db.collection('search-results');
-
+        // Store the results permanently in MongoDB
         await collection.updateOne(
           { 
             keyword: keyword.toLowerCase(), 
@@ -74,19 +62,52 @@ export const searchValueSerp = cache(async function(keyword: string, city: strin
           {
             $set: {
               results,
-              timestamp: new Date()
+              firstFetched: new Date(), // When the data was first fetched
+              lastAccessed: new Date(), // Track when the data was last accessed
             }
           },
           { upsert: true }
         );
+
+        // Update lastAccessed timestamp
+        await collection.updateOne(
+          { 
+            keyword: keyword.toLowerCase(), 
+            city: city.toLowerCase() 
+          },
+          {
+            $set: {
+              lastAccessed: new Date()
+            }
+          }
+        );
+
+        return results;
       } catch (error) {
-        console.error('MongoDB cache update error:', error);
+        console.error('MongoDB error:', error);
+        throw error; // Throw error to be handled by outer try-catch
       }
     }
 
-    return results;
+    // If MongoDB is not configured, just fetch from API
+    console.log('MongoDB not configured, fetching from API for:', keyword, city);
+    const response = await axios.get('https://api.valueserp.com/search', { params });
+    const places = response.data.places_results || [];
+    
+    return places.map((place: any) => ({
+      title: place.title || '',
+      address: place.address || '',
+      phone: place.phone,
+      rating: place.rating || 0,
+      reviews: place.reviews || 0,
+      website: place.website,
+      type: place.type,
+      hours: place.hours,
+      description: place.description
+    }));
+
   } catch (error) {
-    console.error('ValueSerp API Error:', error);
+    console.error('Error in searchValueSerp:', error);
     return [];
   }
 });
