@@ -1,8 +1,15 @@
 import SearchForm from '@/components/SearchForm';
 import { WrenchScrewdriverIcon, MapPinIcon, ShieldCheckIcon, ClockIcon, ArrowLongRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { getCaliforniaCities } from "@/lib/cities";
+import { getKeywords } from "@/lib/keywords";
 
-export default function Home() {
+export default async function Home() {
+  const [cities, services] = await Promise.all([
+    getCaliforniaCities(),
+    getKeywords()
+  ]);
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
       {/* Hero Section */}
@@ -16,7 +23,7 @@ export default function Home() {
               Connect with <span className="text-blue-600 font-semibold">reliable, licensed plumbers</span> in your area. 
               Get instant quotes and book appointments with trusted professionals.
             </p>
-            <SearchForm />
+            <SearchForm cities={cities} services={services} />
           </div>
         </div>
       </section>

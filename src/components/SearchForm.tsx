@@ -1,16 +1,27 @@
 'use client';
 
 import { MagnifyingGlassIcon, MapPinIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function SearchForm() {
+interface SearchFormProps {
+  cities: string[];
+  services: string[];
+}
+
+export default function SearchForm({ cities, services }: SearchFormProps) {
+  const router = useRouter();
   const [service, setService] = useState('');
   const [location, setLocation] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', { service, location });
+    if (service && location) {
+      // Convert to URL-friendly format
+      const serviceSlug = service.toLowerCase().replace(/\s+/g, '-');
+      const locationSlug = location.toLowerCase().replace(/\s+/g, '-');
+      router.push(`/${serviceSlug}/${locationSlug}`);
+    }
   };
 
   return (
@@ -28,10 +39,11 @@ export default function SearchForm() {
               required
             >
               <option value="">What service do you need?</option>
-              <option value="emergency">Emergency Plumbing</option>
-              <option value="repair">Pipe Repair</option>
-              <option value="installation">Installation</option>
-              <option value="maintenance">Maintenance</option>
+              {services.map((service) => (
+                <option key={service} value={service}>
+                  {service}
+                </option>
+              ))}
             </select>
           </div>
           
@@ -46,19 +58,19 @@ export default function SearchForm() {
               required
             >
               <option value="">Where do you need it?</option>
-              <option value="los-angeles">Los Angeles</option>
-              <option value="san-diego">San Diego</option>
-              <option value="san-francisco">San Francisco</option>
-              <option value="san-jose">San Jose</option>
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
             </select>
           </div>
 
           <button
             type="submit"
-            disabled={!service || !location}
-            className="md:w-auto w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3.5 rounded-xl font-medium text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
+            className="md:w-auto w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-xl font-medium transition-colors duration-200"
           >
-            Find Plumbers
+            Search
           </button>
         </div>
       </div>
