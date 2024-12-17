@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const city = capitalizeWords(params.city.replace(/-/g, " "));
 
   return {
-    title: `Top ${service} Services in ${city} | Professional ${service} Services`,
+    title: `Best ${service} in ${city}, CA`,
     description: `Find the best ${service} services in ${city}. Professional, licensed, and experienced ${service} experts serving the ${city} area.`
   };
 }
@@ -133,7 +133,7 @@ export default async function Page({ params }: PageProps) {
 
         {/* Service Providers */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedPlaces.map((place, index) => {
+          {sortedPlaces.slice(0, 10).map((place, index) => {
             const getRankBadge = () => {
               if (index === 0) return { color: "bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400", text: "Gold Tier" };
               if (index === 1) return { color: "bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200", text: "Silver Tier" };
