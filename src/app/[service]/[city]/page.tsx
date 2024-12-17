@@ -279,13 +279,43 @@ export default async function Page({ params }: PageProps) {
             
             {/* ZIP Code Maps */}
             {cityData.zipCodes && cityData.zipCodes.length > 0 && (
-              <ZipCodesMap zipCodes={cityData.zipCodes} city={city} />
+              <div className="mb-8">
+                <ZipCodesMap zipCodes={cityData.zipCodes} city={city} />
+              </div>
             )}
+
+            {/* Neighborhoods Section */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">Neighborhoods We Serve</h3>
+                  <p className="text-gray-600">Complete coverage across {city} communities</p>
+                </div>
+                <div className="hidden md:block">
+                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+                    {cityData.neighborhoods.length} Areas
+                  </span>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {cityData.neighborhoods.map((neighborhood, index) => (
+                  <div 
+                    key={neighborhood} 
+                    className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 border border-gray-200 hover:border-emerald-300 hover:bg-emerald-50 transition-all duration-200"
+                  >
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                        <MapPinIcon className="h-4 w-4 text-emerald-600" />
+                      </div>
+                    </div>
+                    <span className="font-medium text-gray-800 text-sm">{neighborhood}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
-
-        {/* Map Component */}
-        <Map city={city} />
       </div>
     </main>
   );
