@@ -15,15 +15,13 @@ export default function SearchForm({ cities, services }: SearchFormProps) {
   const [location, setLocation] = useState('');
   const [isServiceOpen, setIsServiceOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [serviceSearch, setServiceSearch] = useState('');
-  const [locationSearch, setLocationSearch] = useState('');
 
   const filteredServices = services.filter(s => 
-    s.toLowerCase().includes(serviceSearch.toLowerCase())
+    !service || s.toLowerCase().includes(service.toLowerCase())
   );
   
   const filteredCities = cities.filter(city => 
-    city.toLowerCase().includes(locationSearch.toLowerCase())
+    !location || city.toLowerCase().includes(location.toLowerCase())
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -60,42 +58,36 @@ export default function SearchForm({ cities, services }: SearchFormProps) {
               <MagnifyingGlassIcon className="h-5 w-5 text-blue-600" />
             </div>
             <div className="relative">
-              <button
-                type="button"
-                onClick={() => setIsServiceOpen(!isServiceOpen)}
-                className="block w-full pl-12 pr-10 py-4 text-left text-base text-gray-900 bg-gray-50/50 backdrop-blur-sm border border-gray-200/50 rounded-xl 
+              <input
+                type="text"
+                value={service}
+                onChange={(e) => {
+                  setService(e.target.value);
+                  setIsServiceOpen(true);
+                }}
+                onFocus={() => setIsServiceOpen(true)}
+                placeholder="What service do you need?"
+                className="block w-full pl-12 pr-10 py-4 text-base text-gray-900 bg-gray-50/50 backdrop-blur-sm border border-gray-200/50 rounded-xl 
                           shadow-[0_2px_10px_rgba(0,0,0,0.06)] 
                           hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] 
                           focus:shadow-[0_0_0_2px_rgba(59,130,246,0.5)] 
                           transition-all duration-200 ease-out
                           group-hover:scale-[1.02] group-hover:-translate-y-0.5"
-              >
-                <span className="block truncate">{service || "What service do you need?"}</span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-4">
-                  <svg 
-                    className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${isServiceOpen ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </span>
-              </button>
+              />
+              <span className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <svg 
+                  className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${isServiceOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
               
               {isServiceOpen && (
                 <div className="absolute z-10 w-full mt-2 bg-white/90 backdrop-blur-lg border border-gray-200/50 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                               max-h-60 overflow-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100">
-                  <div className="p-2">
-                    <input
-                      type="text"
-                      value={serviceSearch}
-                      onChange={(e) => setServiceSearch(e.target.value)}
-                      placeholder="Search services..."
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                  </div>
                   <div className="py-1">
                     {filteredServices.map((s) => (
                       <div
@@ -124,42 +116,36 @@ export default function SearchForm({ cities, services }: SearchFormProps) {
               <MapPinIcon className="h-5 w-5 text-blue-600" />
             </div>
             <div className="relative">
-              <button
-                type="button"
-                onClick={() => setIsLocationOpen(!isLocationOpen)}
-                className="block w-full pl-12 pr-10 py-4 text-left text-base text-gray-900 bg-gray-50/50 backdrop-blur-sm border border-gray-200/50 rounded-xl 
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  setIsLocationOpen(true);
+                }}
+                onFocus={() => setIsLocationOpen(true)}
+                placeholder="Where do you need it?"
+                className="block w-full pl-12 pr-10 py-4 text-base text-gray-900 bg-gray-50/50 backdrop-blur-sm border border-gray-200/50 rounded-xl 
                           shadow-[0_2px_10px_rgba(0,0,0,0.06)] 
                           hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] 
                           focus:shadow-[0_0_0_2px_rgba(59,130,246,0.5)] 
                           transition-all duration-200 ease-out
                           group-hover:scale-[1.02] group-hover:-translate-y-0.5"
-              >
-                <span className="block truncate">{location || "Where do you need it?"}</span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-4">
-                  <svg 
-                    className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${isLocationOpen ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </span>
-              </button>
+              />
+              <span className="absolute inset-y-0 right-0 flex items-center pr-4">
+                <svg 
+                  className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${isLocationOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
               
               {isLocationOpen && (
                 <div className="absolute z-10 w-full mt-2 bg-white/90 backdrop-blur-lg border border-gray-200/50 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                               max-h-60 overflow-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100">
-                  <div className="p-2">
-                    <input
-                      type="text"
-                      value={locationSearch}
-                      onChange={(e) => setLocationSearch(e.target.value)}
-                      placeholder="Search cities..."
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                  </div>
                   <div className="py-1">
                     {filteredCities.map((city) => (
                       <div
