@@ -4,11 +4,13 @@ import { notFound } from "next/navigation";
 import { searchValueSerp } from "@/lib/valueserp";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Map from "@/components/Map";
+import ZipCodesMap from "@/components/ZipCodesMap";
 import { StarIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { MapPinIcon, PhoneIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 import { getCaliforniaCities } from "@/lib/cities";
 import { getKeywords } from "@/lib/keywords";
 import { getRandomNumber } from "@/lib/numbers";
+import { getCityData } from "@/lib/cityData";
 
 interface BusinessResult {
   title: string;
@@ -87,6 +89,7 @@ export default async function Page({ params }: PageProps) {
   const city = capitalizeWords(params.city.replace(/-/g, " "));
   
   const results = await searchValueSerp(service, city);
+  const cityData = getCityData(params.city);
 
   // Sort places by rating (highest first)
   const sortedPlaces = [...results].sort((a, b) => (b.rating || 0) - (a.rating || 0));
@@ -265,8 +268,79 @@ export default async function Page({ params }: PageProps) {
             );
           })}
         </div>
-      {/* Map Component */}
-      <Map city={city} />
+
+        {/* Service Area Coverage */}
+        {cityData && (
+          <div className="mb-12 mt-16">
+            <div className="flex items-center space-x-3 mb-8">
+              <div className="h-10 w-1 bg-blue-600 rounded-full"></div>
+              <h2 className="text-3xl font-bold text-gray-900">Service Coverage in {city}</h2>
+            </div>
+            
+            {/* Zip Codes Section */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-100">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">Zip Codes We Serve</h3>
+                  <p className="text-gray-600">Providing reliable service across these postal areas</p>
+                </div>
+                <div className="hidden md:block">
+                  <span className="inline-flex items-center rounded-full bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
+                    {cityData.zipCodes.length} Service Areas
+                  </span>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+                {cityData.zipCodes.map((zipCode) => (
+                  <div 
+                    key={zipCode} 
+                    className="bg-gray-50 rounded-xl p-3 text-center border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200"
+                  >
+                    <span className="font-semibold text-gray-700">{zipCode}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-xl overflow-hidden border border-gray-200">
+                <ZipCodesMap zipCodes={cityData.zipCodes} city={city} />
+              </div>
+            </div>
+
+            {/* Neighborhoods Section */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">Neighborhoods Where These Company Provide Services</h3>
+                  <p className="text-gray-600">Complete coverage across {city} communities</p>
+                </div>
+                <div className="hidden md:block">
+                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+                    {cityData.neighborhoods.length} Areas
+                  </span>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {cityData.neighborhoods.map((neighborhood, index) => (
+                  <div 
+                    key={neighborhood} 
+                    className="flex items-center space-x-3 p-3 rounded-xl bg-gray-50 border border-gray-200 hover:border-emerald-300 hover:bg-emerald-50 transition-all duration-200"
+                  >
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                        <MapPinIcon className="h-4 w-4 text-emerald-600" />
+                      </div>
+                    </div>
+                    <span className="font-medium text-gray-800 text-sm">{neighborhood}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Map Component */}
+        <Map city={city} />
       </div>
     </main>
   );
