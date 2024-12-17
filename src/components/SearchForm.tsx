@@ -15,6 +15,16 @@ export default function SearchForm({ cities, services }: SearchFormProps) {
   const [location, setLocation] = useState('');
   const [isServiceOpen, setIsServiceOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [serviceSearch, setServiceSearch] = useState('');
+  const [locationSearch, setLocationSearch] = useState('');
+
+  const filteredServices = services.filter(s => 
+    s.toLowerCase().includes(serviceSearch.toLowerCase())
+  );
+  
+  const filteredCities = cities.filter(city => 
+    city.toLowerCase().includes(locationSearch.toLowerCase())
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,8 +86,18 @@ export default function SearchForm({ cities, services }: SearchFormProps) {
               {isServiceOpen && (
                 <div className="absolute z-10 w-full mt-2 bg-white/90 backdrop-blur-lg border border-gray-200/50 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                               max-h-60 overflow-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100">
+                  <div className="p-2">
+                    <input
+                      type="text"
+                      value={serviceSearch}
+                      onChange={(e) => setServiceSearch(e.target.value)}
+                      placeholder="Search services..."
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </div>
                   <div className="py-1">
-                    {services.map((s) => (
+                    {filteredServices.map((s) => (
                       <div
                         key={s}
                         className={`px-4 py-3 cursor-pointer transition-all duration-200
@@ -130,8 +150,18 @@ export default function SearchForm({ cities, services }: SearchFormProps) {
               {isLocationOpen && (
                 <div className="absolute z-10 w-full mt-2 bg-white/90 backdrop-blur-lg border border-gray-200/50 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
                               max-h-60 overflow-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100">
+                  <div className="p-2">
+                    <input
+                      type="text"
+                      value={locationSearch}
+                      onChange={(e) => setLocationSearch(e.target.value)}
+                      placeholder="Search cities..."
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  </div>
                   <div className="py-1">
-                    {cities.map((city) => (
+                    {filteredCities.map((city) => (
                       <div
                         key={city}
                         className={`px-4 py-3 cursor-pointer transition-all duration-200
