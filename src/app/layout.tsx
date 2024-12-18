@@ -10,6 +10,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Find Local Plumbing Services',
   description: 'Connect with trusted local plumbing professionals in your area.',
+  icons: {
+    icon: '/Plumber-Favicon.png',
+    apple: '/Plumber-Favicon.png',
+  },
 }
 
 export default function RootLayout({
@@ -19,6 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/Plumber-Favicon.png" />
+        <link rel="apple-touch-icon" href="/Plumber-Favicon.png" />
+      </head>
       <body className={inter.className}>
         <Header />
         <main>{children}</main>
