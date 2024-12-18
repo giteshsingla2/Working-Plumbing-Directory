@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: 'Connect with trusted local plumbing professionals in your area.',
   icons: {
     icon: '/Plumber-Favicon.png',
+    shortcut: '/Plumber-Favicon.png',
     apple: '/Plumber-Favicon.png',
   },
 }
@@ -24,8 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/Plumber-Favicon.png" />
-        <link rel="apple-touch-icon" href="/Plumber-Favicon.png" />
+        <link rel="icon" type="image/png" href="/Plumber-Favicon.png" />
+        <link rel="shortcut icon" type="image/png" href="/Plumber-Favicon.png" />
+        <link rel="apple-touch-icon" type="image/png" href="/Plumber-Favicon.png" />
       </head>
       <body className={inter.className}>
         <Header />

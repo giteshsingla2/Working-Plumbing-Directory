@@ -81,8 +81,8 @@ const Footer = () => {
               </li>
               <li className="text-sm">
                 <strong>Email:</strong>{' '}
-                <a href="mailto:info@plumbfind.ca" className="hover:text-white transition-colors">
-                  info@plumbfind.ca
+                <a href="mailto:contact@findplumbercalifornia.com" className="hover:text-white transition-colors">
+                  contact@findplumbercalifornia.com
                 </a>
               </li>
               <li className="text-sm">
