@@ -13,7 +13,7 @@ const keywords = readFileSync(keywordsPath, 'utf-8')
   .map(keyword => keyword.trim());
 
 // Base URL of your website
-const BASE_URL = 'https://plumbing-directory.vercel.app'; // Update this with your actual domain
+const BASE_URL = 'https://findplumbercalifornia.com'; // Update this with your actual domain
 
 // Function to convert string to URL-friendly slug
 function toSlug(str: string): string {
