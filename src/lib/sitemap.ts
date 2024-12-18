@@ -48,7 +48,7 @@ export async function generateSitemap() {
   for (const service of keywords) {
     for (const city of cityNames) {
       dynamicUrls.push({
-        loc: `${BASE_URL}/search/${toSlug(service)}/${toSlug(city)}`,
+        loc: `${BASE_URL}/${toSlug(service)}/${toSlug(city)}`,
         lastmod: new Date().toISOString(),
         changefreq: 'weekly',
         priority: '0.6',
